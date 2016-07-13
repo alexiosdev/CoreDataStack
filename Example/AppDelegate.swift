@@ -17,33 +17,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var coreDataStack: CoreDataStack?
     private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var loadingVC: UIViewController = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("LoadingVC")
+        return self.mainStoryboard.instantiateViewController(withIdentifier: "LoadingVC")
     }()
     private lazy var myCoreDataVC: MyCoreDataConnectedViewController = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("CoreDataVC")
+        return self.mainStoryboard.instantiateViewController(withIdentifier: "CoreDataVC")
             as! MyCoreDataConnectedViewController
     }()
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.main().bounds)
         window?.rootViewController = loadingVC
-
+        
         CoreDataStack.constructSQLiteStack(withModelName: "UniqueConstraintModel") { result in
             switch result {
-            case .Success(let stack):
+            case .success(let stack):
                 self.coreDataStack = stack
                 self.seedInitialData()
 
                 // Note don't actually use dispatch_after
                 // Arbitrary 2 second delay to illustrate an async setup.
-                // dispatch_async(dispatch_get_main_queue()) {} should be used in production
-                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * NSEC_PER_SEC))
-                dispatch_after(delay, dispatch_get_main_queue()) {
+                DispatchQueue.main.after(when: .now() + .seconds(2)){
                     self.myCoreDataVC.coreDataStack = stack
                     self.window?.rootViewController = self.myCoreDataVC
                 }
-            case .Failure(let error):
+            case .failure(let error):
                 assertionFailure("\(error)")
             }
         }
@@ -64,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try moc.performAndWaitOrThrow {
                 let books = StubbedBookData.books
                 for bookTitle in books {
-                    let book = Book(managedObjectContext: moc)
+                    let book = Book(in: moc)
                     book.title = bookTitle
                 }
                 try moc.saveContextAndWait()

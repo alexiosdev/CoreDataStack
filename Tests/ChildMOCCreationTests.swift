@@ -25,11 +25,11 @@ class ChildMOCCreationTests: TempDirectoryTestCase {
 
 
     func testBackgroundMOCCreation() {
-        XCTAssertEqual(stack.newChildContext().concurrencyType, NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
+        XCTAssertEqual(stack.newChildContext().concurrencyType, NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
     }
 
     func testMainQueueMOCCreation() {
-        XCTAssertEqual(stack.newChildContext(concurrencyType: .MainQueueConcurrencyType).concurrencyType, NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        XCTAssertEqual(stack.newChildContext(concurrencyType: .mainQueueConcurrencyType).concurrencyType, NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
     }
 
 }

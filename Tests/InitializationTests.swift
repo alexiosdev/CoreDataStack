@@ -18,13 +18,13 @@ class InitializationTests: TempDirectoryTestCase {
     var memoryStack: CoreDataStack!
 
     func testInitialization() {
-        weak var ex1 = expectationWithDescription("SQLite Callback")
+        weak var ex1 = expectation(withDescription: "SQLite Callback")
 
         CoreDataStack.constructSQLiteStack(withModelName: "Sample", inBundle: unitTestBundle, withStoreURL: tempStoreURL) { result in
             switch result {
-            case .Success(let stack):
+            case .success(let stack):
                 self.sqlStack = stack
-            case .Failure(let error):
+            case .failure(let error):
                 self.failingOn(error)
             }
             ex1?.fulfill()
@@ -36,7 +36,7 @@ class InitializationTests: TempDirectoryTestCase {
             failingOn(error)
         }
 
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
 
         XCTAssertNotNil(sqlStack.mainQueueContext)
         XCTAssertNotNil(sqlStack.privateQueueContext)
@@ -46,20 +46,20 @@ class InitializationTests: TempDirectoryTestCase {
     }
 
     func testExpectedFailureOfInitializationUsingInvalidURL() {
-        weak var ex1 = expectationWithDescription("SQLite Callback")
-        let storeURL = NSURL(fileURLWithPath: "/store.sqlite")
+        weak var ex1 = expectation(withDescription: "SQLite Callback")
+        let storeURL = URL(fileURLWithPath: "/store.sqlite")
         
         CoreDataStack.constructSQLiteStack(withModelName: "Sample", inBundle: unitTestBundle, withStoreURL: storeURL) { result in
             switch result {
-            case .Success(_):
+            case .success(_):
                 XCTFail("Constructing with an invalid url should fail")
-            case .Failure(_):
+            case .failure(_):
                 break
             }
             ex1?.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
         
         XCTAssertNil(sqlStack)
     }

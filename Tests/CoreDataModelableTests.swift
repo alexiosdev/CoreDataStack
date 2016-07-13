@@ -17,42 +17,42 @@ class CoreDataModelableTests: TempDirectoryTestCase {
     override func setUp() {
         super.setUp()
 
-        weak var expectation = expectationWithDescription("callback")
+        weak var expectation = self.expectation(withDescription: "callback")
         CoreDataStack.constructSQLiteStack(withModelName: "Sample", inBundle: unitTestBundle, withStoreURL: tempStoreURL) { result in
             switch result {
-            case .Success(let stack):
+            case .success(let stack):
                 self.stack = stack
-            case .Failure(let error):
+            case .failure(let error):
                 XCTFail("Error constructing stack: \(error)")
             }
             expectation?.fulfill()
         }
 
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
 
     func testNewObject() {
-        let book = Book(managedObjectContext: stack.mainQueueContext)
+        let book = Book(in: stack.mainQueueContext)
         XCTAssertNotNil(book)
     }
 
     func testFindFirst() {
         do {
-            let _ = Book(managedObjectContext: stack.mainQueueContext)
+            let _ = Book(in: stack.mainQueueContext)
             try stack.mainQueueContext.saveContextAndWait()
 
-            guard let firstBook = try Book.findFirstInContext(stack.mainQueueContext) else {
+            guard let firstBook = try Book.findFirst(in: stack.mainQueueContext) else {
                 XCTFail("First Book not found"); return
             }
             firstBook.title = "Testing"
             try! stack.mainQueueContext.saveContextAndWait()
 
-            let predicate1 = NSPredicate(format: "title CONTAINS[cd] %@", "Bob")
-            let notFound = try Book.findFirstInContext(stack.mainQueueContext, predicate: predicate1)
+            let predicate1 = Predicate(format: "title CONTAINS[cd] %@", "Bob")
+            let notFound = try Book.findFirst(in: stack.mainQueueContext, predicate: predicate1)
             XCTAssertNil(notFound)
 
-            let predicate2 = NSPredicate(format: "title CONTAINS[cd] %@", "Test")
-            guard let _ = try Book.findFirstInContext(stack.mainQueueContext, predicate: predicate2) else {
+            let predicate2 = Predicate(format: "title CONTAINS[cd] %@", "Test")
+            guard let _ = try Book.findFirst(in: stack.mainQueueContext, predicate: predicate2) else {
                 XCTFail("Failed to find first with matching title."); return
             }
         } catch {
@@ -60,15 +60,15 @@ class CoreDataModelableTests: TempDirectoryTestCase {
         }
     }
 
-    func testAllInContext() {
+    func testallInContext() {
         let totalBooks = 5
         for _ in 0..<totalBooks {
-            let _ = Book(managedObjectContext: stack.mainQueueContext)
+            let _ = Book(in: stack.mainQueueContext)
             try! stack.mainQueueContext.saveContextAndWait()
         }
 
         do {
-            let allBooks = try Book.allInContext(stack.mainQueueContext)
+            let allBooks = try Book.all(in: stack.mainQueueContext)
             XCTAssertEqual(allBooks.count, totalBooks)
         } catch {
             failingOn(error)
@@ -76,13 +76,13 @@ class CoreDataModelableTests: TempDirectoryTestCase {
     }
 
     func testAllInContextWithPredicateAndSortDescriptor() {
-        let iOSBook = Book(managedObjectContext: stack.mainQueueContext)
+        let iOSBook = Book(in: stack.mainQueueContext)
         iOSBook.title = "iOS Programming: The Big Nerd Ranch Guide"
 
-        let swiftBook = Book(managedObjectContext: stack.mainQueueContext)
+        let swiftBook = Book(in: stack.mainQueueContext)
         swiftBook.title = "Swift Programming: The Big Nerd Ranch Guide"
 
-        let warAndPeace = Book(managedObjectContext: stack.mainQueueContext)
+        let warAndPeace = Book(in: stack.mainQueueContext)
         warAndPeace.title = "War and Peace"
 
         do {
@@ -91,11 +91,11 @@ class CoreDataModelableTests: TempDirectoryTestCase {
             XCTFail("Failed to save with error: \(error)")
         }
 
-        let sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", "Big Nerd Ranch")
+        let sortDescriptors = [SortDescriptor(key: "title", ascending: true)]
+        let predicate = Predicate(format: "title CONTAINS[cd] %@", "Big Nerd Ranch")
 
         do {
-            let matchingBooks = try Book.allInContext(stack.mainQueueContext, predicate: predicate, sortDescriptors: sortDescriptors)
+            let matchingBooks = try Book.all(in: stack.mainQueueContext, predicate: predicate, sortDescriptors: sortDescriptors)
             XCTAssertEqual(matchingBooks.count, 2)
             XCTAssertEqual(matchingBooks.first, swiftBook)
             XCTAssertEqual(matchingBooks.last, iOSBook)
@@ -107,12 +107,12 @@ class CoreDataModelableTests: TempDirectoryTestCase {
     func testCountInContext() {
         let totalBooks = 5
         for _ in 0..<totalBooks {
-            let _ = Book(managedObjectContext: stack.mainQueueContext)
+            let _ = Book(in: stack.mainQueueContext)
             try! stack.mainQueueContext.saveContextAndWait()
         }
         
         do {
-            let booksCount = try Book.countInContext(stack.mainQueueContext)
+            let booksCount = try Book.count(in: stack.mainQueueContext)
             XCTAssertEqual(booksCount, totalBooks)
         } catch {
             failingOn(error)
@@ -120,13 +120,13 @@ class CoreDataModelableTests: TempDirectoryTestCase {
     }
     
     func testCountInContextWithPredicate() {
-        let iOSBook = Book(managedObjectContext: stack.mainQueueContext)
+        let iOSBook = Book(in: stack.mainQueueContext)
         iOSBook.title = "iOS Programming: The Big Nerd Ranch Guide"
         
-        let swiftBook = Book(managedObjectContext: stack.mainQueueContext)
+        let swiftBook = Book(in: stack.mainQueueContext)
         swiftBook.title = "Swift Programming: The Big Nerd Ranch Guide"
         
-        let warAndPeace = Book(managedObjectContext: stack.mainQueueContext)
+        let warAndPeace = Book(in: stack.mainQueueContext)
         warAndPeace.title = "War and Peace"
         
         do {
@@ -135,10 +135,10 @@ class CoreDataModelableTests: TempDirectoryTestCase {
             XCTFail("Failed to save with error: \(error)")
         }
         
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", "Big Nerd Ranch")
+        let predicate = Predicate(format: "title CONTAINS[cd] %@", "Big Nerd Ranch")
         
         do {
-            let matchingBooksCount = try Book.countInContext(stack.mainQueueContext, predicate: predicate)
+            let matchingBooksCount = try Book.count(in: stack.mainQueueContext, predicate: predicate)
             XCTAssertEqual(matchingBooksCount, 2)
         } catch {
             XCTFail("Failed to fetch with error: \(error)")
@@ -149,7 +149,7 @@ class CoreDataModelableTests: TempDirectoryTestCase {
         let totalBooks = 5
         var exceptionBooks = [Book]()
         for counter in 0..<totalBooks {
-            let newBook = Book(managedObjectContext: stack.mainQueueContext)
+            let newBook = Book(in: stack.mainQueueContext)
             try! stack.mainQueueContext.saveContextAndWait()
 
             if (counter % 2 == 0) {
@@ -158,11 +158,11 @@ class CoreDataModelableTests: TempDirectoryTestCase {
         }
 
         do {
-            var allBooks = try Book.allInContext(stack.mainQueueContext)
+            var allBooks = try Book.all(in: stack.mainQueueContext)
             XCTAssertEqual(allBooks.count, totalBooks)
 
-            try Book.removeAllInContext(stack.mainQueueContext, except: exceptionBooks)
-            allBooks = try Book.allInContext(stack.mainQueueContext)
+            try Book.removeAll(in: stack.mainQueueContext, except: exceptionBooks)
+            allBooks = try Book.all(in: stack.mainQueueContext)
             XCTAssertEqual(allBooks.count, exceptionBooks.count)
         } catch {
             failingOn(error)
@@ -172,16 +172,16 @@ class CoreDataModelableTests: TempDirectoryTestCase {
     func testRemoveAll() {
         let totalBooks = 5
         for _ in 0..<totalBooks {
-            let _ = Book(managedObjectContext: stack.mainQueueContext)
+            let _ = Book(in: stack.mainQueueContext)
             try! stack.mainQueueContext.saveContextAndWait()
         }
 
         do {
-            var allBooks = try Book.allInContext(stack.mainQueueContext)
+            var allBooks = try Book.all(in: stack.mainQueueContext)
             XCTAssertEqual(allBooks.count, totalBooks)
 
-            try Book.removeAllInContext(stack.mainQueueContext)
-            allBooks = try Book.allInContext(stack.mainQueueContext)
+            try Book.removeAll(in: stack.mainQueueContext)
+            allBooks = try Book.all(in: stack.mainQueueContext)
             XCTAssertEqual(allBooks.count, 0)
         } catch {
             failingOn(error)

@@ -29,7 +29,6 @@
 		E43713EE1C86470D009C3B39 /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDE1C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift */; };
 		E43713EF1C86470D009C3B39 /* NSPersistentStoreCoordinator+SQLiteHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDF1C80B05D003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift */; };
 		E43713F01C86470D009C3B39 /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
-		E43713F11C86470D009C3B39 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE91C80B06D003DE8FF /* FetchedResultsController.swift */; };
 		E43713F21C864714009C3B39 /* CoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = E40CFCCD1C80BEB200CBDFF2 /* CoreDataStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E43713F51C86479B009C3B39 /* CoreDataStackOSXSQLiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43713F41C86479B009C3B39 /* CoreDataStackOSXSQLiteStoreTests.swift */; };
 		E43713F61C864B9A009C3B39 /* Sample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E40CFCDC1C80C4E700CBDFF2 /* Sample.xcdatamodeld */; };
@@ -47,11 +46,8 @@
 		E440FEE61C80B060003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDE1C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift */; };
 		E440FEE71C80B060003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDF1C80B05D003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift */; };
 		E440FEEA1C80B06D003DE8FF /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
-		E440FEEB1C80B06D003DE8FF /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE91C80B06D003DE8FF /* FetchedResultsController.swift */; };
 		E440FEEC1C80B06F003DE8FF /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
-		E440FEED1C80B06F003DE8FF /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE91C80B06D003DE8FF /* FetchedResultsController.swift */; };
 		E440FEF41C80B0DD003DE8FF /* EntityMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF01C80B0D9003DE8FF /* EntityMonitorTests.swift */; };
-		E440FEF51C80B0DD003DE8FF /* FetchedResultsControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF11C80B0D9003DE8FF /* FetchedResultsControllerTests.swift */; };
 		E440FEFA1C80B0F7003DE8FF /* TempDirectoryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF81C80B0F3003DE8FF /* TempDirectoryTestCase.swift */; };
 		E440FEFB1C80B0F7003DE8FF /* TempDirectoryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF81C80B0F3003DE8FF /* TempDirectoryTestCase.swift */; };
 		E440FEFE1C80B113003DE8FF /* CoreDataStackTVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEFC1C80B10F003DE8FF /* CoreDataStackTVTests.swift */; };
@@ -80,6 +76,9 @@
 		E4C9BC391AEA848600A6BD1B /* CoreDataStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9BC2D1AEA848600A6BD1B /* CoreDataStack.framework */; };
 		E4DB61461BFFBB4400BD3E6B /* bnr-logo-square.png in Resources */ = {isa = PBXBuildFile; fileRef = E4DB61451BFFBB4400BD3E6B /* bnr-logo-square.png */; };
 		E4DB61481BFFBBD200BD3E6B /* MyCoreDataConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB61471BFFBBD200BD3E6B /* MyCoreDataConnectedViewController.swift */; };
+		ECEF9DDB1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */; };
+		ECEF9DDC1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */; };
+		ECEF9DDD1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,10 +131,8 @@
 		E440FEDE1C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSPersistentStoreCoordinator+AsyncHelpers.swift"; path = "Sources/NSPersistentStoreCoordinator+AsyncHelpers.swift"; sourceTree = SOURCE_ROOT; };
 		E440FEDF1C80B05D003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSPersistentStoreCoordinator+SQLiteHelpers.swift"; path = "Sources/NSPersistentStoreCoordinator+SQLiteHelpers.swift"; sourceTree = SOURCE_ROOT; };
 		E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntityMonitor.swift; path = Sources/EntityMonitor.swift; sourceTree = SOURCE_ROOT; };
-		E440FEE91C80B06D003DE8FF /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchedResultsController.swift; path = Sources/FetchedResultsController.swift; sourceTree = SOURCE_ROOT; };
 		E440FEEE1C80B08E003DE8FF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 		E440FEF01C80B0D9003DE8FF /* EntityMonitorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EntityMonitorTests.swift; path = Tests/EntityMonitorTests.swift; sourceTree = SOURCE_ROOT; };
-		E440FEF11C80B0D9003DE8FF /* FetchedResultsControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchedResultsControllerTests.swift; path = Tests/FetchedResultsControllerTests.swift; sourceTree = SOURCE_ROOT; };
 		E440FEF81C80B0F3003DE8FF /* TempDirectoryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TempDirectoryTestCase.swift; path = Tests/TempDirectoryTestCase.swift; sourceTree = SOURCE_ROOT; };
 		E440FEFC1C80B10F003DE8FF /* CoreDataStackTVTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataStackTVTests.swift; path = Tests/CoreDataStackTVTests.swift; sourceTree = SOURCE_ROOT; };
 		E440FEFF1C80B124003DE8FF /* BatchOperationContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BatchOperationContextTests.swift; path = Tests/BatchOperationContextTests.swift; sourceTree = SOURCE_ROOT; };
@@ -163,6 +160,7 @@
 		E4C9BC381AEA848600A6BD1B /* CoreDataStackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataStackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DB61451BFFBB4400BD3E6B /* bnr-logo-square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bnr-logo-square.png"; sourceTree = "<group>"; };
 		E4DB61471BFFBBD200BD3E6B /* MyCoreDataConnectedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCoreDataConnectedViewController.swift; sourceTree = "<group>"; };
+		ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchedResultsController.swift; path = Sources/FetchedResultsController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,7 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */,
-				E440FEE91C80B06D003DE8FF /* FetchedResultsController.swift */,
+				ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */,
 			);
 			name = "Type Safe Monitors";
 			path = CoreDataStack;
@@ -281,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				E440FEF01C80B0D9003DE8FF /* EntityMonitorTests.swift */,
-				E440FEF11C80B0D9003DE8FF /* FetchedResultsControllerTests.swift */,
 			);
 			name = "Type Safe Monitors Tests";
 			sourceTree = "<group>";
@@ -588,12 +585,15 @@
 					};
 					E4B99C651B740321005B7E1A = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 					E4C9BC2C1AEA848600A6BD1B = {
 						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0800;
 					};
 					E4C9BC371AEA848600A6BD1B = {
 						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -687,12 +687,12 @@
 			files = (
 				E43713EA1C86470D009C3B39 /* CoreDataStack.swift in Sources */,
 				E43713EB1C86470D009C3B39 /* CoreDataModelable.swift in Sources */,
+				ECEF9DDD1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */,
 				E43713EC1C86470D009C3B39 /* NSManagedObjectContext+AsyncHelpers.swift in Sources */,
 				E43713ED1C86470D009C3B39 /* NSManagedObjectContext+SaveHelpers.swift in Sources */,
 				E43713EE1C86470D009C3B39 /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */,
 				E43713EF1C86470D009C3B39 /* NSPersistentStoreCoordinator+SQLiteHelpers.swift in Sources */,
 				E43713F01C86470D009C3B39 /* EntityMonitor.swift in Sources */,
-				E43713F11C86470D009C3B39 /* FetchedResultsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,7 +714,7 @@
 			files = (
 				E440FEE51C80B060003DE8FF /* NSManagedObjectContext+SaveHelpers.swift in Sources */,
 				E440FEEC1C80B06F003DE8FF /* EntityMonitor.swift in Sources */,
-				E440FEED1C80B06F003DE8FF /* FetchedResultsController.swift in Sources */,
+				ECEF9DDC1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */,
 				E440FEE61C80B060003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */,
 				E440FEE41C80B060003DE8FF /* NSManagedObjectContext+AsyncHelpers.swift in Sources */,
 				E440FEDA1C80B04F003DE8FF /* CoreDataStack.swift in Sources */,
@@ -757,7 +757,7 @@
 			files = (
 				E440FEE11C80B05D003DE8FF /* NSManagedObjectContext+SaveHelpers.swift in Sources */,
 				E440FEEA1C80B06D003DE8FF /* EntityMonitor.swift in Sources */,
-				E440FEEB1C80B06D003DE8FF /* FetchedResultsController.swift in Sources */,
+				ECEF9DDB1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */,
 				E440FEE21C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */,
 				E440FEE01C80B05D003DE8FF /* NSManagedObjectContext+AsyncHelpers.swift in Sources */,
 				E440FED81C80B04A003DE8FF /* CoreDataModelable.swift in Sources */,
@@ -785,7 +785,6 @@
 				E4472C561CC92BD7003374CC /* StackCallbackQueueTests.swift in Sources */,
 				E440FF0B1C80B127003DE8FF /* BatchOperationContextTests.swift in Sources */,
 				E440FF0D1C80B127003DE8FF /* InitializationTests.swift in Sources */,
-				E440FEF51C80B0DD003DE8FF /* FetchedResultsControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -987,6 +986,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bignerdranch.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -999,6 +999,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bignerdranch.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1113,6 +1114,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1131,6 +1133,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bignerdranch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1150,6 +1153,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1164,6 +1168,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bignerdranch.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

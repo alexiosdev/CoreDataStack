@@ -28,20 +28,20 @@ public extension NSPersistentStoreCoordinator {
      - parameter storeFileURL: The URL where the SQLite store file will reside.
      - parameter completion: A completion closure with a `CoordinatorResult` that will be executed following the `NSPersistentStore` being added to the `NSPersistentStoreCoordinator`.
      */
-    public class func setupSQLiteBackedCoordinator(managedObjectModel: NSManagedObjectModel,
-                                                   storeFileURL: NSURL,
+    public class func setupSQLiteBackedCoordinator(_ managedObjectModel: NSManagedObjectModel,
+                                                   storeFileURL: URL,
                                                    completion: (CoreDataStack.CoordinatorResult) -> Void) {
-        let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
-        dispatch_async(backgroundQueue) {
+        let backgroundQueue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground)
+        backgroundQueue.async {
             do {
                 let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-                try coordinator.addPersistentStoreWithType(NSSQLiteStoreType,
-                                                           configuration: nil,
-                                                           URL: storeFileURL,
+                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
+                                                           configurationName: nil,
+                                                           at: storeFileURL,
                                                            options: stockSQLiteStoreOptions)
-                completion(.Success(coordinator))
+                completion(.success(coordinator))
             } catch let error {
-                completion(.Failure(error))
+                completion(.failure(error))
             }
         }
     }

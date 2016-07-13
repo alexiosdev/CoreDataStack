@@ -10,15 +10,16 @@ import XCTest
 
 class TempDirectoryTestCase: XCTestCase {
 
-    lazy var tempStoreURL: NSURL? = {
-        return self.tempStoreDirectory?.URLByAppendingPathComponent("testmodel.sqlite")
+    lazy var tempStoreURL: URL? = {
+        return try! self.tempStoreDirectory?.appendingPathComponent("testmodel.sqlite")
     }()
 
-    private lazy var tempStoreDirectory: NSURL? = {
-        let baseURL = NSURL.fileURLWithPath(NSTemporaryDirectory(), isDirectory: true)
-        let tempDir = baseURL.URLByAppendingPathComponent("XXXXXX")
+    private lazy var tempStoreDirectory: URL? = {
+        let baseURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        
+        let tempDir = try! baseURL.appendingPathComponent("XXXXXX")
         do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(tempDir,
+            try FileManager.default.createDirectory(at: tempDir,
                 withIntermediateDirectories: true,
                 attributes: nil)
             return tempDir
@@ -31,7 +32,7 @@ class TempDirectoryTestCase: XCTestCase {
     private func removeTempDir() {
         if let tempStoreDirectory = tempStoreDirectory {
             do {
-                try NSFileManager.defaultManager().removeItemAtURL(tempStoreDirectory)
+                try FileManager.default.removeItem(at: tempStoreDirectory)
             } catch {
                 assertionFailure("\(error)")
             }
