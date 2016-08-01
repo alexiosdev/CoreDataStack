@@ -72,8 +72,6 @@ extension CoreDataModelable where Self: NSManagedObject {
 
      - returns: `NSFetchRequest`: The new fetch request.
      */
-    @available(iOS, obsoleted:10.0)
-    @available(OSX, obsoleted:10.0)
     static public func fetchRequestForEntity(in context: NSManagedObjectContext) -> NSFetchRequest<Self> {
         let fetchRequest:NSFetchRequest<Self> = NSFetchRequest(entityName: entityName)
         fetchRequest.entity = entityDescription(in: context)
