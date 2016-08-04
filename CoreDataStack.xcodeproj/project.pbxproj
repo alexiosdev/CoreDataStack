@@ -28,7 +28,6 @@
 		E43713ED1C86470D009C3B39 /* NSManagedObjectContext+SaveHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDD1C80B05D003DE8FF /* NSManagedObjectContext+SaveHelpers.swift */; };
 		E43713EE1C86470D009C3B39 /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDE1C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift */; };
 		E43713EF1C86470D009C3B39 /* NSPersistentStoreCoordinator+SQLiteHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDF1C80B05D003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift */; };
-		E43713F01C86470D009C3B39 /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
 		E43713F21C864714009C3B39 /* CoreDataStack.h in Headers */ = {isa = PBXBuildFile; fileRef = E40CFCCD1C80BEB200CBDFF2 /* CoreDataStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E43713F51C86479B009C3B39 /* CoreDataStackOSXSQLiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43713F41C86479B009C3B39 /* CoreDataStackOSXSQLiteStoreTests.swift */; };
 		E43713F61C864B9A009C3B39 /* Sample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E40CFCDC1C80C4E700CBDFF2 /* Sample.xcdatamodeld */; };
@@ -45,8 +44,6 @@
 		E440FEE51C80B060003DE8FF /* NSManagedObjectContext+SaveHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDD1C80B05D003DE8FF /* NSManagedObjectContext+SaveHelpers.swift */; };
 		E440FEE61C80B060003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDE1C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift */; };
 		E440FEE71C80B060003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEDF1C80B05D003DE8FF /* NSPersistentStoreCoordinator+SQLiteHelpers.swift */; };
-		E440FEEA1C80B06D003DE8FF /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
-		E440FEEC1C80B06F003DE8FF /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
 		E440FEF41C80B0DD003DE8FF /* EntityMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF01C80B0D9003DE8FF /* EntityMonitorTests.swift */; };
 		E440FEFA1C80B0F7003DE8FF /* TempDirectoryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF81C80B0F3003DE8FF /* TempDirectoryTestCase.swift */; };
 		E440FEFB1C80B0F7003DE8FF /* TempDirectoryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEF81C80B0F3003DE8FF /* TempDirectoryTestCase.swift */; };
@@ -76,9 +73,9 @@
 		E4C9BC391AEA848600A6BD1B /* CoreDataStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9BC2D1AEA848600A6BD1B /* CoreDataStack.framework */; };
 		E4DB61461BFFBB4400BD3E6B /* bnr-logo-square.png in Resources */ = {isa = PBXBuildFile; fileRef = E4DB61451BFFBB4400BD3E6B /* bnr-logo-square.png */; };
 		E4DB61481BFFBBD200BD3E6B /* MyCoreDataConnectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DB61471BFFBBD200BD3E6B /* MyCoreDataConnectedViewController.swift */; };
-		ECEF9DDB1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */; };
-		ECEF9DDC1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */; };
-		ECEF9DDD1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEF9DDA1D3627B3007F8BA8 /* FetchedResultsController.swift */; };
+		ECDC77AD1D53BECA00E6137F /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
+		ECDC77AE1D53BECA00E6137F /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
+		ECDC77AF1D53BECB00E6137F /* EntityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440FEE81C80B06D003DE8FF /* EntityMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -686,13 +683,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E43713EA1C86470D009C3B39 /* CoreDataStack.swift in Sources */,
+				ECDC77AF1D53BECB00E6137F /* EntityMonitor.swift in Sources */,
 				E43713EB1C86470D009C3B39 /* CoreDataModelable.swift in Sources */,
-				ECEF9DDD1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */,
 				E43713EC1C86470D009C3B39 /* NSManagedObjectContext+AsyncHelpers.swift in Sources */,
 				E43713ED1C86470D009C3B39 /* NSManagedObjectContext+SaveHelpers.swift in Sources */,
 				E43713EE1C86470D009C3B39 /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */,
 				E43713EF1C86470D009C3B39 /* NSPersistentStoreCoordinator+SQLiteHelpers.swift in Sources */,
-				E43713F01C86470D009C3B39 /* EntityMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,8 +709,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E440FEE51C80B060003DE8FF /* NSManagedObjectContext+SaveHelpers.swift in Sources */,
-				E440FEEC1C80B06F003DE8FF /* EntityMonitor.swift in Sources */,
-				ECEF9DDC1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */,
+				ECDC77AE1D53BECA00E6137F /* EntityMonitor.swift in Sources */,
 				E440FEE61C80B060003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */,
 				E440FEE41C80B060003DE8FF /* NSManagedObjectContext+AsyncHelpers.swift in Sources */,
 				E440FEDA1C80B04F003DE8FF /* CoreDataStack.swift in Sources */,
@@ -756,8 +751,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E440FEE11C80B05D003DE8FF /* NSManagedObjectContext+SaveHelpers.swift in Sources */,
-				E440FEEA1C80B06D003DE8FF /* EntityMonitor.swift in Sources */,
-				ECEF9DDB1D3627B3007F8BA8 /* FetchedResultsController.swift in Sources */,
+				ECDC77AD1D53BECA00E6137F /* EntityMonitor.swift in Sources */,
 				E440FEE21C80B05D003DE8FF /* NSPersistentStoreCoordinator+AsyncHelpers.swift in Sources */,
 				E440FEE01C80B05D003DE8FF /* NSManagedObjectContext+AsyncHelpers.swift in Sources */,
 				E440FED81C80B04A003DE8FF /* CoreDataModelable.swift in Sources */,
