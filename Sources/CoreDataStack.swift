@@ -28,13 +28,30 @@ public typealias CoreDataStackBatchMOCCallback = (CoreDataStack.BatchContextResu
 public final class CoreDataStack {
 
     /// CoreDataStack specific ErrorTypes
-    public enum Error: ErrorProtocol {
+    public enum CreateError: Swift.Error, RawRepresentable {
+        public typealias RawValue = String
+        
         /// Case when an `NSPersistentStore` is not found for the supplied store URL
         case storeNotFoundAt(url: URL)
         /// Case when an In-Memory store is not found
         case inMemoryStoreMissing
         /// Case when the store URL supplied to contruct function cannot be used
         case unableToCreateStoreAt(url: URL)
+        
+        public var rawValue: String{
+            switch self {
+            case let .storeNotFoundAt(url):
+                return "Store not found at \(url)"
+            case .inMemoryStoreMissing:
+                return "In memory store is missing"
+            case let .unableToCreateStoreAt(url: url):
+                return "Unable to create store at \(url)"
+            }
+        }
+        
+        public init?(rawValue: String) {
+            return nil
+        }
     }
 
     /**
@@ -109,11 +126,11 @@ public final class CoreDataStack {
         do {
             try createDirectoryIfNecessary(storeFileURL)
         } catch {
-            callback(.failure(Error.unableToCreateStoreAt(url: storeFileURL)))
+            callback(.failure(CreateError.unableToCreateStoreAt(url: storeFileURL)))
             return
         }
 
-        let backgroundQueue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground)
+        let backgroundQueue = DispatchQueue.global(qos: .background)
         let callbackQueue: DispatchQueue = callbackQueue ?? backgroundQueue
         NSPersistentStoreCoordinator.setupSQLiteBackedCoordinator(
             model,
@@ -135,11 +152,9 @@ public final class CoreDataStack {
         }
     }
 
-    private static func createDirectoryIfNecessary(_ url: URL) throws {
+    fileprivate static func createDirectoryIfNecessary(_ url: URL) throws {
         let fileManager = FileManager.default
-        guard let directory = try? url.deletingLastPathComponent() else {
-            throw Error.unableToCreateStoreAt(url: url)
-        }
+        let directory = url.deletingLastPathComponent()
         try fileManager.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
     }
 
@@ -165,29 +180,28 @@ public final class CoreDataStack {
     }
 
     // MARK: - Private Implementation
-
-    private enum StoreType {
+    fileprivate enum StoreType {
         case inMemory
         case sqLite(storeURL: URL)
     }
 
-    private let managedObjectModelName: String
-    private let storeType: StoreType
-    private let bundle: Bundle
-    private var persistentStoreCoordinator: NSPersistentStoreCoordinator {
+    fileprivate let managedObjectModelName: String
+    fileprivate let storeType: StoreType
+    fileprivate let bundle: Bundle
+    fileprivate var persistentStoreCoordinator: NSPersistentStoreCoordinator {
         didSet {
             privateQueueContext = constructPersistingContext()
             privateQueueContext.persistentStoreCoordinator = persistentStoreCoordinator
             mainQueueContext = constructMainQueueContext()
         }
     }
-    private var managedObjectModel: NSManagedObjectModel {
+    fileprivate var managedObjectModel: NSManagedObjectModel {
         get {
             return bundle.managedObjectModel(modelName: managedObjectModelName)
         }
     }
 
-    private init(modelName: String, bundle: Bundle, persistentStoreCoordinator: NSPersistentStoreCoordinator, storeType: StoreType) {
+    fileprivate init(modelName: String, bundle: Bundle, persistentStoreCoordinator: NSPersistentStoreCoordinator, storeType: StoreType) {
         self.bundle = bundle
         self.storeType = storeType
         managedObjectModelName = modelName
@@ -200,7 +214,7 @@ public final class CoreDataStack {
         NotificationCenter.default.removeObserver(self)
     }
 
-    private let saveBubbleDispatchGroup = DispatchGroup()
+    fileprivate let saveBubbleDispatchGroup = DispatchGroup()
 }
 
 public extension CoreDataStack {
@@ -213,28 +227,28 @@ public extension CoreDataStack {
         /// A success case with associated `NSPersistentStoreCoordinator` instance
         case success(NSPersistentStoreCoordinator)
         /// A failure case with associated `ErrorType` instance
-        case failure(ErrorProtocol)
+        case failure(Error)
     }
     /// Result containing either an instance of `NSManagedObjectContext` or `ErrorType`
     public enum BatchContextResult {
         /// A success case with associated `NSManagedObjectContext` instance
         case success(NSManagedObjectContext)
         /// A failure case with associated `ErrorType` instance
-        case failure(ErrorProtocol)
+        case failure(Error)
     }
     /// Result containing either an instance of `CoreDataStack` or `ErrorType`
     public enum SetupResult {
         /// A success case with associated `CoreDataStack` instance
         case success(CoreDataStack)
         /// A failure case with associated `ErrorType` instance
-        case failure(ErrorProtocol)
+        case failure(Error)
     }
     /// Result of void representing `Success` or an instance of `ErrorType`
     public enum SuccessResult {
         /// A success case
         case success
         /// A failure case with associated ErrorType instance
-        case failure(ErrorProtocol)
+        case failure(Error)
     }
     public typealias SaveResult = SuccessResult
     public typealias ResetResult = SuccessResult
@@ -249,14 +263,14 @@ public extension CoreDataStack {
      - parameter resetCallback: A callback with a `Success` or an `ErrorType` value with the error
      */
     public func resetStore(_ callbackQueue: DispatchQueue? = nil, resetCallback: CoreDataStackStoreResetCallback) {
-        let backgroundQueue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground)
+        let backgroundQueue = DispatchQueue.global(qos: .background)
         let callbackQueue: DispatchQueue = callbackQueue ?? backgroundQueue
         self.saveBubbleDispatchGroup.notify(queue: backgroundQueue) {
             switch self.storeType {
             case .inMemory:
                 do {
                     guard let store = self.persistentStoreCoordinator.persistentStores.first else {
-                        resetCallback(.failure(Error.inMemoryStoreMissing))
+                        resetCallback(.failure(CreateError.inMemoryStoreMissing))
                         break
                     }
                     try self.persistentStoreCoordinator.performAndWaitOrThrow {
@@ -278,7 +292,7 @@ public extension CoreDataStack {
                 let mom = self.managedObjectModel
 
                 guard let store = coordinator.persistentStore(for: storeURL) else {
-                    let error = Error.storeNotFoundAt(url: storeURL)
+                    let error = CreateError.storeNotFoundAt(url: storeURL)
                     resetCallback(.failure(error))
                     break
                 }
@@ -294,8 +308,8 @@ public extension CoreDataStack {
 
                             // Remove journal files if present
                             // Eat the error because different versions of SQLite might have different journal files
-                            let _ = try? fm.removeItem(at: try! storeURL.appendingPathComponent("-shm"))
-                            let _ = try? fm.removeItem(at: try! storeURL.appendingPathComponent("-wal"))
+                            let _ = try? fm.removeItem(at: storeURL.appendingPathComponent("-shm"))
+                            let _ = try? fm.removeItem(at: storeURL.appendingPathComponent("-wal"))
                         }
                     }
                 } catch let resetError {
@@ -401,7 +415,7 @@ public extension CoreDataStack {
                 setupCallback(.failure(error))
             }
         case .sqLite(let storeURL):
-            let backgroundQueue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground)
+            let backgroundQueue = DispatchQueue.global(qos: .background)
             let callbackQueue: DispatchQueue = callbackQueue ?? backgroundQueue
             NSPersistentStoreCoordinator.setupSQLiteBackedCoordinator(managedObjectModel, storeFileURL: storeURL) { result in
                 switch result {
@@ -420,8 +434,8 @@ public extension CoreDataStack {
     }
 }
 
-private extension CoreDataStack {
-    @objc private func stackMemberContextDidSaveNotification(_ notification: Notification) {
+fileprivate extension CoreDataStack {
+    @objc fileprivate func stackMemberContextDidSaveNotification(_ notification: Notification) {
         guard let notificationMOC = notification.object as? NSManagedObjectContext else {
             assertionFailure("Notification posted from an object other than an NSManagedObjectContext")
             return
@@ -437,19 +451,19 @@ private extension CoreDataStack {
     }
 }
 
-private extension CoreDataStack {
-    private static var documentsDirectory: URL? {
+fileprivate extension CoreDataStack {
+    fileprivate static var documentsDirectory: URL? {
         get {
-            let urls = FileManager.default.urlsForDirectory(.documentDirectory, inDomains: .userDomainMask)
+            let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             return urls.first
         }
     }
 }
 
-private extension Bundle {
-    static private let modelExtension = "momd"
+fileprivate extension Bundle {
+    static fileprivate let modelExtension = "momd"
     func managedObjectModel(modelName: String) -> NSManagedObjectModel {
-        guard let URL = urlForResource(modelName, withExtension: Bundle.modelExtension),
+        guard let URL = url(forResource: modelName, withExtension: Bundle.modelExtension),
             let model = NSManagedObjectModel(contentsOf: URL) else {
                 preconditionFailure("Model not found or corrupted with name: \(modelName) in bundle: \(self)")
         }

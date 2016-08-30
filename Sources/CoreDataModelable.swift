@@ -88,7 +88,7 @@ extension CoreDataModelable where Self: NSManagedObject {
 
     - returns: `Self?`: The first entity that matches the optional predicate or `nil`.
     */
-    static public func findFirst(in context: NSManagedObjectContext, predicate: Predicate? = nil) throws -> Self? {
+    static public func findFirst(in context: NSManagedObjectContext, predicate: NSPredicate? = nil) throws -> Self? {
         let fetchRequest = request()
         fetchRequest.predicate = predicate
         fetchRequest.fetchLimit = 1
@@ -108,7 +108,7 @@ extension CoreDataModelable where Self: NSManagedObject {
 
      - returns: `[Self]`: The array of matching entities.
      */
-    static public func all(in context: NSManagedObjectContext, predicate: Predicate? = nil, sortDescriptors: [SortDescriptor]? = nil) throws -> [Self] {
+    static public func all(in context: NSManagedObjectContext, predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) throws -> [Self] {
         let fetchRequest = request()
         fetchRequest.sortDescriptors = sortDescriptors
         fetchRequest.predicate = predicate
@@ -127,7 +127,7 @@ extension CoreDataModelable where Self: NSManagedObject {
      
      - returns: `Int`: Count of entities that matches the optional predicate.
      */
-    static public func count(in context: NSManagedObjectContext, predicate: Predicate? = nil) throws -> Int {
+    static public func count(in context: NSManagedObjectContext, predicate: NSPredicate? = nil) throws -> Int {
         let fetchReqeust = request()
         fetchReqeust.includesSubentities = false
         fetchReqeust.predicate = predicate
@@ -158,7 +158,7 @@ extension CoreDataModelable where Self: NSManagedObject {
      */
     static public func removeAll(in context: NSManagedObjectContext, except toKeep: [Self]) throws {
         let fetchRequest = request()
-        fetchRequest.predicate = Predicate(format: "NOT (self IN %@)", toKeep)
+        fetchRequest.predicate = NSPredicate(format: "NOT (self IN %@)", toKeep)
         try removeAll(by: fetchRequest, inContext: context)
     }
 

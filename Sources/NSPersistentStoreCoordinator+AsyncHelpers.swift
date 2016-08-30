@@ -19,9 +19,9 @@ extension NSPersistentStoreCoordinator {
      - throws: Any error thrown by the inner function. This method should be
      technically `rethrows`, but cannot be due to Swift limitations.
     **/
-    public func performAndWaitOrThrow<Return>(_ body: () throws -> Return) throws -> Return {
+    public func performAndWaitOrThrow<Return>(_ body: @escaping () throws -> Return) throws -> Return {
         var result: Return!
-        var thrown: ErrorProtocol?
+        var thrown: Error?
 
         performAndWait {
             do {

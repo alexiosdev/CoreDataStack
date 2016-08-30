@@ -13,7 +13,7 @@ public extension NSPersistentStoreCoordinator {
     /**
      Default persistent store options used for the `SQLite` backed `NSPersistentStoreCoordinator`
      */
-    public static var stockSQLiteStoreOptions: [NSObject: AnyObject] {
+    public static var stockSQLiteStoreOptions: [AnyHashable: Any] {
         return [
             NSMigratePersistentStoresAutomaticallyOption: true,
             NSInferMappingModelAutomaticallyOption: true,
@@ -30,8 +30,8 @@ public extension NSPersistentStoreCoordinator {
      */
     public class func setupSQLiteBackedCoordinator(_ managedObjectModel: NSManagedObjectModel,
                                                    storeFileURL: URL,
-                                                   completion: (CoreDataStack.CoordinatorResult) -> Void) {
-        let backgroundQueue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosBackground)
+                                                   completion: @escaping (CoreDataStack.CoordinatorResult) -> Void) {
+        let backgroundQueue = DispatchQueue.global(qos: .background)
         backgroundQueue.async {
             do {
                 let coordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
